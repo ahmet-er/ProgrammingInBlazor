@@ -1,3 +1,5 @@
+using BlazorMovies.Client;
+using BlazorMovies.Client.Helpers;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,30 +1,34 @@
 ﻿@page "/"
+@inject IRepository repository
+@inject SingletonService singleton
+@using static BlazorMovies.Client.Shared.MainLayout;
+
+<p style="color: @AppState.Color">Singleton count: @singleton.Value</p>
 
 <div>
     <h3>Movie</h3>
     <MovieList Movies="movies" />
 </div>
 
-<div>
-    <h3>Create a movie</h3>
-    <DummyTextbox @attributes="dummyTextboxparameters"/>
-</div>
+
+<button @onclick="AddNewMovie">Add a new movie</button>
+
+@*<div>
+        <h3>Create a movie</h3>
+        <DummyTextbox @attributes="dummyTextboxparameters" />
+    </div>*@
 
 @code{
+    [CascadingParameter] public AppState AppState { get; set; }
     private List<Movie> movies;
-    private Dictionary<string, object> dummyTextboxparameters = new Dictionary<string, object>()
-    {
-        {"placeholder", "new movie name" },
-        {"disabled", "true" }
-    };
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        movies = new List<Movie>()
-            {
-                new Movie(){ Title = "<b>Spider-Man: Far From Home</b>", ReleaseDate = new DateTime(2019, 7, 2) },
-                new Movie(){ Title = "<i>Moana</i>", ReleaseDate = new DateTime(2016, 11, 23) },
-                new Movie(){ Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16) }
-            };
+        movies = repository.GetMovies();
+    }
+
+    public void AddNewMovie()
+    {
+        movies.Add(new Movie() { Title = "Sample Movie", ReleaseDate = new DateTime(2000, 3, 3) });
     }
 }
