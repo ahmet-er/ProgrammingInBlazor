@@ -1,0 +1,26 @@
+﻿@if (Movies == null)
+{
+    @*<text>Loading...</text>*@
+    <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+    </div>
+}
+else if (Movies.Count == 0)
+{
+    <text>There are no records to show</text>
+}
+else
+{
+    <input type="checkbox" @onchange="@(() => displayButtons = !displayButtons)" />
+
+    @foreach (var movie in Movies)
+    {
+        <IndividualMovie Movie="movie" DisplayButtons="displayButtons"/>
+    }
+}
+
+@code {
+    [Parameter] public List<Movie> Movies { get; set; }
+    bool displayButtons = false;
+
+}
