@@ -8,9 +8,9 @@ namespace BlazorMovies.Client.Helpers
         {
             return new List<Movie>()
             {
-                new Movie(){ Title = "<b>Spider-Man: Far From Home</b>", ReleaseDate = new DateTime(2019, 7, 2) },
-                new Movie(){ Title = "<i>Moana</i>", ReleaseDate = new DateTime(2016, 11, 23) },
-                new Movie(){ Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16) }
+                new Movie(){ Title = "Spider-Man: Far From Home", ReleaseDate = new DateTime(2019, 7, 2), ImageUrl = "spiderman.jpg" },
+                new Movie(){ Title = "Moana", ReleaseDate = new DateTime(2016, 11, 23), ImageUrl ="moana.webp" },
+                new Movie(){ Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16), ImageUrl = "inception.jpeg" }
             };
         }
     }

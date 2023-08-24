@@ -1,9 +1,11 @@
 ﻿<div>
-    <p>Title : @((MarkupString)Movie.Title)</p>
+    <!--Section3 Homework-->
+    <Img ImageUrl="@Movie.ImageUrl" />
+    <p>Title : @(Movie.Title)</p>
     <p>Release Date : @Movie.ReleaseDate.ToString("dd MMMM yyyy")</p>
     @if (DisplayButtons)
     {
-        <div>
+        <div class="mb-3">
             <button @onclick="(() => DeleteMovie.InvokeAsync(Movie))">Delete</button>
         </div>
     }
