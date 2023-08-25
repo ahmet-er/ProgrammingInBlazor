@@ -1,47 +1,17 @@
 ﻿@page "/"
+@page "/index"
 @inject IRepository repository
-@inject SingletonService singleton
-@using static BlazorMovies.Client.Shared.MainLayout;
-
-<p style="color: @AppState.Color">Singleton count: @singleton.Value</p>
 
 <div>
     <h3>Movie</h3>
     <MovieList Movies="movies" />
 </div>
 
-
-<button @onclick="AddNewMovie">Add a new movie</button>
-
-<!-- Section 3 End Homework-->
-<div class="container my-5">
-    <div class="row p-3">
-        <Img ImageUrl="spiderman.jpg" />
-        <Img ImageUrl="moana.webp" />
-    </div>
-    <div class="row p-3">
-
-        <Img ImageUrl="inception.jpeg" />
-        <Img ImageUrl=@null />
-    </div>
-</div>
-
-@*<div>
-        <h3>Create a movie</h3>
-        <DummyTextbox @attributes="dummyTextboxparameters" />
-    </div>*@
-
 @code{
-    [CascadingParameter] public AppState AppState { get; set; }
-    private List<Movie> movies;
+    private List<BlazorMovies.Shared.Entities.Movie> movies;
 
     protected async override Task OnInitializedAsync()
     {
         movies = repository.GetMovies();
-    }
-
-    public void AddNewMovie()
-    {
-        movies.Add(new Movie() { Title = "Sample Movie", ReleaseDate = new DateTime(2000, 3, 3) });
     }
 }

@@ -1,28 +1,27 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using MathNet.Numerics.Statistics;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using static BlazorMovies.Client.Shared.MainLayout;
 
 namespace BlazorMovies.Client.Pages
 {
     public partial class Counter
     {
-        [Inject] SingletonService singleton { get; set; }
-        [Inject] TransientService transient { get; set; }
         [Inject] IJSRuntime js { get; set; }
-        [CascadingParameter] public AppState AppState { get; set; }
         private int currentCount = 0;
         private static int currentCountStatic = 0;
         IJSObjectReference module;
-
         [JSInvokable]
         public async Task IncrementCount()
         {
+            var array = new double[] {1, 2, 3, 4, 5};
+            var max = array.Maximum();
+            var min = array.Minimum();
+            
+
             module = await js.InvokeAsync<IJSObjectReference>("import", "./js/Counter.js");
-            await module.InvokeVoidAsync("displayAlert", "hello world");
+            await module.InvokeVoidAsync("displayAlert", $"Max is {max} and min is {min}");
 
             currentCount++;
-            singleton.Value++;
-            transient.Value++;
             currentCountStatic++;
             await js.InvokeVoidAsync("dotnetStaticInvocation");
         }
