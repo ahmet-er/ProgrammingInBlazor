@@ -1,12 +1,22 @@
 using BlazorMovies.Client;
 using BlazorMovies.Client.Helpers;
+using BlazorMovies.Server;
+using BlazorMovies.Server.Helpers;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IFileStorageService, AzureStorageService>();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options => 
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
