@@ -6,9 +6,9 @@
 <h3>Search Movies</h3>
 
 <EditForm Model="filterMoviesDTO">
-    <div class="form-inline">
+    <div class="d-flex justify-content-center">
         <div class="form-group mb-2">
-            <label for="title" class="sr-only">Title</label>
+            @*<label for="title" class="sr-only">Title</label>*@
             <input type="text" class="form-control" id="title" placeholder="Movie Title"
                    @bind-value="filterMoviesDTO.Title" @bind-value:event="oninput"
                    @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))" />
@@ -43,7 +43,8 @@
         <button type="button" class="btn btn-danger mb-2" @onclick="Clear">Clear</button>
     </div>
 </EditForm>
-<MoviesList Movies="Movies"></MoviesList>
+@*<MoviesList Movies="Movies"></MoviesList>*@
+<MovieList Movies="Movies"></MovieList>
 
 <Pagination CurrentPage="filterMoviesDTO.Page" TotalAmountPages="totalAmountPages"
             SelectedPage="SelectedPage" />
