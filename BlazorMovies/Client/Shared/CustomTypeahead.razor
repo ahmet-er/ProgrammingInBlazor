@@ -47,7 +47,7 @@
             else
             {
                 <div class="blazored-typeahead__notfound">
-                    No Reults Found
+                    No Results Found
                 </div>
             }
         </div>
@@ -75,6 +75,7 @@
         _debounceTimer.Interval = Debounce;
         _debounceTimer.AutoReset = false;
         _debounceTimer.Elapsed += Search;
+
         base.OnInitialized();
     }
 
@@ -109,7 +110,7 @@
         {
             _searchText = value;
 
-            if(value.Length == 0)
+            if (value.Length == 0)
             {
                 IsShowingSuggestions = false;
                 _debounceTimer.Stop();
@@ -135,6 +136,7 @@
             IsShowingSuggestions = true;
         }
     }
+
     private void onfocusout()
     {
         if (!IsMouseInSuggestion)

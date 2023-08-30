@@ -1,4 +1,10 @@
-﻿namespace BlazorMovies.Client.Helpers
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace BlazorMovies.Client.Helpers
 {
     public class HttpResponseWrapper<T>
     {

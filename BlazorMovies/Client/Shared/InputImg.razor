@@ -10,7 +10,7 @@
     {
         <div>
             <div style="margin:10px">
-                <img src="data:image/jpeg;base64, @imageBase64" style="width:400px;" />
+                <img src="data:image/jpeg;base64, @imageBase64" style="width: 400px;" />
             </div>
         </div>
     }
@@ -18,7 +18,7 @@
     {
         <div>
             <div style="margin:10px">
-                <img src="@ImageURL" style="width:400px;" />
+                <img src="@ImageURL" style="width: 400px;" />
             </div>
         </div>
     }
@@ -32,9 +32,9 @@
 
     async Task OnChange(InputFileChangeEventArgs e)
     {
-        var imageFiles = e.GetMultipleFiles();
+        var imagesFiles = e.GetMultipleFiles();
 
-        foreach(var imageFile in imageFiles)
+        foreach (var imageFile in imagesFiles)
         {
             var buffer = new byte[imageFile.Size];
             await imageFile.OpenReadStream().ReadAsync(buffer);
@@ -44,5 +44,4 @@
             StateHasChanged();
         }
     }
-
 }

@@ -2,25 +2,27 @@
 @page "/index"
 @inject IMoviesRepository moviesRepository
 
-<div>
-    <h3>In Theaters</h3>
-    <MovieList Movies="InTheaters" />
+<div class="border border-3 rounded p-4 bg-dark text-white">
+    <h3 class="d-flex justify-content-center">IN THEATERS</h3>
+    <div class="d-flex justify-content-center">
+        <MovieList Movies="InTheaters" />
+    </div>
 </div>
 
-<div>
-    <h3>Upcoming Releases</h3>
-    <h3>Upcoming Releases</h3>
-    <MovieList Movies="UpcomingReleases" />
+<div class="border border-3 rounded p-4 bg-dark text-white mt-2">
+    <h3 class="d-flex justify-content-center">UPCOMING RELEASES</h3>
+    <div class="d-flex justify-content-center">
+        <MovieList Movies="UpcomingReleases" />
+    </div>
 </div>
 
 @code{
     private List<Movie> InTheaters;
     private List<Movie> UpcomingReleases;
-
     protected async override Task OnInitializedAsync()
     {
         var response = await moviesRepository.GetIndexPageDTO();
-        InTheaters = response.InTheaters;
+        InTheaters = response.Intheaters;
         UpcomingReleases = response.UpcomingReleases;
     }
 }

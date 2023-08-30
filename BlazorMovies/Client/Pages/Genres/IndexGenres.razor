@@ -1,53 +1,60 @@
 ﻿@page "/genres"
 @inject IGenreRepository genreRepository
+    <div class="row">
+        <div class="col d-flex justify-content-start">
+            <h3>Index Genres</h3>
+        </div>
 
-<div class="row container">
-    <div class="col d-flex justify-content-start">
-        <h3>Index Genres</h3>
+        <div class="form-group col d-flex justify-content-end">
+            <a class="btn btn-primary" href="genre/create">New Genre</a>
+        </div>
     </div>
 
-    <div class="form-group col d-flex justify-content-end">
-        <a class="btn btn-secondary" href="genre/create">Create a Genre</a>
-    </div>
-</div>
-
-<GenericList List="Genres">
-    <WholeListTemplate>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Genres)
-                {
+    <GenericList List="Genres">
+        <WholeListTemplate>
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>
-                            <a class="btn btn-success" href="/genre/edit/@item.Id">Edit</a>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                        <td>@item.Name</td>
+                        <th></th>
+                        <th>Name</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </WholeListTemplate>
-</GenericList>
+                </thead>
+                <tbody>
+                    @foreach (var item in Genres)
+                    {
+                        <tr>
+                            <td>
+                                <a class="btn btn-success" href="/genre/edit/@item.Id">Edit</a>
+                                <button class="btn btn-danger" @onclick="@(() => DeleteGenres(item.Id))">Delete</button>
+                            </td>
+                            <td>@item.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </WholeListTemplate>
+    </GenericList>
 
-@code {
-    List<Genre> Genres;
+    @code {
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
+        List<Genre> Genres;
+
+        protected override async Task OnInitializedAsync()
         {
+            try
+            {
+                Genres = await genreRepository.GetGenres();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async Task DeleteGenres(int Id)
+        {
+            await genreRepository.DeleteGenre(Id);
             Genres = await genreRepository.GetGenres();
         }
-        catch (Exception ex)
-        {
-
-        }
     }
-}

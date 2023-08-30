@@ -1,16 +1,14 @@
 ﻿@page "/people"
 @inject IPersonRepository personRepository
-
-    <div class="row container">
+    <div class="row">
         <div class="col d-flex justify-content-start">
             <h3>Index People</h3>
         </div>
 
         <div class="form-group col d-flex justify-content-end">
-            <a class="btn btn-secondary" href="person/create">New Person</a>
+            <a class="btn btn-primary" href="person/create">New Person</a>
         </div>
     </div>
-
 
     <GenericList List="People">
         <WholeListTemplate>
@@ -27,7 +25,7 @@
                         <tr>
                             <td>
                                 <a class="btn btn-success" href="/person/edit/@item.Id">Edit</a>
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger" @onclick="@(() => DeletePerson(item.Id))">Delete</button>
                             </td>
                             <td>@item.Name</td>
                         </tr>
@@ -37,18 +35,44 @@
         </WholeListTemplate>
     </GenericList>
 
+    <div class="d-flex justify-content-end">
+        <Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages"
+                    SelectedPage="SelectedPage" />
+    </div>
+
     @code {
         List<Person> People;
+        PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 10 };
+        private int totalAmountPages;
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                People = await personRepository.GetPeople();
+                await LoadPeople();
             }
             catch (Exception ex)
             {
 
             }
+        }
+
+        private async Task LoadPeople()
+        {
+            var paginatedResponse = await personRepository.GetPeople(paginationDTO);
+            People = paginatedResponse.Response;
+            totalAmountPages = paginatedResponse.TotalAmountPages;
+        }
+
+        private async Task SelectedPage(int page)
+        {
+            paginationDTO.Page = page;
+            await LoadPeople();
+        }
+
+        private async Task DeletePerson(int id)
+        {
+            await personRepository.DeletePerson(id);
+            await LoadPeople();
         }
     }

@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
 using BlazorMovies.Server.Helpers;
+using BlazorMovies.Shared.DTOs;
 using BlazorMovies.Shared.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorMovies.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class PeopleController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -25,9 +29,11 @@ namespace BlazorMovies.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Person>>> Get()
+        public async Task<ActionResult<List<Person>>> Get([FromQuery] PaginationDTO paginationDTO)
         {
-            return await context.People.ToListAsync();
+            var queryable = context.People.AsQueryable();
+            await HttpContext.InsertPaginationParametersInResponse(queryable, paginationDTO.RecordsPerPage);
+            return await queryable.Paginate(paginationDTO).ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -53,7 +59,7 @@ namespace BlazorMovies.Server.Controllers
             if (!string.IsNullOrWhiteSpace(person.Picture))
             {
                 var personPicture = Convert.FromBase64String(person.Picture);
-                person.Picture = await fileStorageService.SaveFile(personPicture, ".jpg", "people");
+                person.Picture = await fileStorageService.SaveFile(personPicture, "jpg", "people");
             }
 
             context.Add(person);
@@ -73,9 +79,25 @@ namespace BlazorMovies.Server.Controllers
             if (!string.IsNullOrWhiteSpace(person.Picture))
             {
                 var personPicture = Convert.FromBase64String(person.Picture);
-                personDB.Picture = await fileStorageService.EditFile(personPicture, "jpg", "people", personDB.Picture);
+                personDB.Picture = await fileStorageService.EditFile(personPicture,
+                    "jpg", "people", personDB.Picture);
             }
 
+            await context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            context.Remove(person);
             await context.SaveChangesAsync();
             return NoContent();
         }

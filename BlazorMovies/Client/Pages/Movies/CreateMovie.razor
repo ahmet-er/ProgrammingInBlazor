@@ -1,7 +1,7 @@
 ﻿@page "/movies/create"
 @inject NavigationManager navigationManager
-@inject IMoviesRepository movieRepository
-@inject IGenreRepository genreRepository
+@inject IMoviesRepository moviesRepository
+@inject IGenreRepository gengeRepository
 
 <h3>Create Movie</h3>
 
@@ -11,11 +11,12 @@
 }
 
 @code {
+
     private Movie Movie = new Movie();
 
     protected async override Task OnInitializedAsync()
     {
-        NotSelectedGenres = await genreRepository.GetGenres();
+        NotSelectedGenres = await gengeRepository.GetGenres();
     }
 
     private List<Genre> NotSelectedGenres;
@@ -24,12 +25,12 @@
     {
         try
         {
-            var movieId = await movieRepository.CreateMovie(Movie);
+            var movieId = await moviesRepository.CreateMovie(Movie);
             navigationManager.NavigateTo($"movie/{movieId}/{Movie.Title.Replace(" ", "-")}");
         }
         catch (Exception ex)
         {
-
+            Console.WriteLine(ex);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace BlazorMovies.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("BlazorMovies.Shared.Entities.Movie", b =>
@@ -72,7 +72,7 @@ namespace BlazorMovies.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("BlazorMovies.Shared.Entities.MoviesActors", b =>
@@ -94,7 +94,7 @@ namespace BlazorMovies.Server.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("MoviesActors");
+                    b.ToTable("MoviesActors", (string)null);
                 });
 
             modelBuilder.Entity("BlazorMovies.Shared.Entities.MoviesGenres", b =>
@@ -109,7 +109,7 @@ namespace BlazorMovies.Server.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("MoviesGenres");
+                    b.ToTable("MoviesGenres", (string)null);
                 });
 
             modelBuilder.Entity("BlazorMovies.Shared.Entities.Person", b =>
@@ -138,7 +138,7 @@ namespace BlazorMovies.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("People");
+                    b.ToTable("People", (string)null);
                 });
 
             modelBuilder.Entity("BlazorMovies.Shared.Entities.MoviesActors", b =>

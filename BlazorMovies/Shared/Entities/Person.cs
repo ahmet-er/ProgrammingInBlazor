@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BlazorMovies.Shared.Entities
 {
@@ -19,7 +17,8 @@ namespace BlazorMovies.Shared.Entities
         public List<MoviesActors> MoviesActors { get; set; } = new List<MoviesActors>();
         [NotMapped]
         public string? Character { get; set; }
-        public override bool Equals(object? obj)
+
+        public override bool Equals(object obj)
         {
             if (obj is Person p2)
             {
@@ -27,6 +26,7 @@ namespace BlazorMovies.Shared.Entities
             }
             return false;
         }
+
         public override int GetHashCode()
         {
             return base.GetHashCode();

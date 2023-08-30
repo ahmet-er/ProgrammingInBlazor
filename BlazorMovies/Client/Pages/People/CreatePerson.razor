@@ -7,18 +7,18 @@
 <PersonForm Person="Person" OnValidSubmit="Create" />
 
 @code {
-	Person Person = new Person();
+    Person Person = new Person();
 
-	private async Task Create()
-	{
-		try
-		{
-			await personRepository.CreatePerson(Person);
-			navigationManager.NavigateTo("people");
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine(ex);
-		}
-	}
+    private async Task Create()
+    {
+        try
+        {
+            await personRepository.CreatePerson(Person);
+            navigationManager.NavigateTo("people");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 }

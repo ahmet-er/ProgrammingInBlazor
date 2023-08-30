@@ -12,12 +12,12 @@
     {
         <li draggable="true"
             @ondragstart="@(() => HandleDragStart(item))"
-            @ondragend="@(() => HandleDragOver(item))"
+            @ondragover="@(() => HandleDragOver(item))"
             class="list-group-item list-group-item-action">
             @MyListTemplate(item)
             <span @onclick="@(() => SelectedElements.Remove(item))"
-                  class="badge badge-danger badge-pill"
-                  style="cursor: pointer; border-radius: 50%; background-color: #DC3545; color: white;">X</span>
+                  class="badge badge-primary badge-pill"
+                  style="cursor: pointer">X</span>
         </li>
     }
 </ul>

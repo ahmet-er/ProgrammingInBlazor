@@ -1,5 +1,7 @@
-﻿<EditForm Model="Person" OnValidSubmit="OnValidSubmit">
+﻿
+<EditForm Model="Person" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
+
     <div class="form-group">
         <label for="name">Name</label>
         <div>
@@ -8,8 +10,8 @@
         </div>
     </div>
 
-    <div class="form-group mt-2">
-        <label for="">Date of Birth</label>
+    <div class="form-group">
+        <label for="name">Date of Birth</label>
         <div>
             <InputDate class="form-control" @bind-Value="@Person.DateOfBirth" />
             <ValidationMessage For="@(() => Person.DateOfBirth)" />
@@ -17,18 +19,17 @@
     </div>
 
     <div class="form-group">
-        <InputImg Label="Picture" OnSelectedImage="OnSelectedImage" ImageURL="@imageURL" />
+        <InputImg Label="Picture" OnSelectedImage="PictureSelected" ImageURL="@imageURL" />
     </div>
 
     <div class="form-group form-markdown">
-        <InputMarkdown 
-                       @bind-Value="Person.Biography"
+        <InputMarkdown @bind-Value="Person.Biography"
                        Label="Biography"
-                       For="@(() => Person.Biography)"
-                       />
+                       For="@(() => Person.Biography)" />
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
+
 </EditForm>
 
 @code {
@@ -45,9 +46,10 @@
         }
     }
 
-    private void OnSelectedImage(string imageBase64)
+    private void PictureSelected(string imageBase64)
     {
         Person.Picture = imageBase64;
         imageURL = null;
+        Console.WriteLine(imageBase64);
     }
 }
